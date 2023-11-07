@@ -23,7 +23,7 @@ public class SecurityConfig {
 	private final String ADMIN = "ROLE_ADMIN";
 	private final String STUDENT = "ROLE_STUDENT";
 	
-	private final String[] apiWhiteList = {"/user/v1/authenticate", "/user/v1/register"};
+	private final String[] apiWhiteList = {"/v1/user/authenticate", "/v1/user/register"};
 	
 	
 	@Bean
@@ -34,9 +34,9 @@ public class SecurityConfig {
 				req
 					.requestMatchers(apiWhiteList)
 					.permitAll()
-					.requestMatchers("/student/**").hasAnyAuthority(SUPER_ADMIN, ADMIN, STUDENT)
-					.requestMatchers("/admin/**").hasAnyAuthority(SUPER_ADMIN, ADMIN)
-					.requestMatchers("/super/**").hasAnyAuthority(SUPER_ADMIN)
+					.requestMatchers("/v1/student/**").hasAnyAuthority(SUPER_ADMIN, ADMIN, STUDENT)
+					.requestMatchers("/v1/admin/**").hasAnyAuthority(SUPER_ADMIN, ADMIN)
+					.requestMatchers("/v1/super/**").hasAnyAuthority(SUPER_ADMIN)
 					.anyRequest()
 					.authenticated()
 				

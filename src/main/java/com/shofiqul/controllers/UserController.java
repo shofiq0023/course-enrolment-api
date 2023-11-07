@@ -13,7 +13,7 @@ import com.shofiqul.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/user/v1")
+@RequestMapping("/v1/user")
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
