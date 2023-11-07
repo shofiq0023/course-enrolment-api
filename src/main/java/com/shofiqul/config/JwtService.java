@@ -3,6 +3,7 @@ package com.shofiqul.config;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class JwtService {
 		return buildToken(new HashMap<String, Object>(), subject);
 	}
 	
-	public String generateToken(HashMap<String, Object> claims, String subject) {
+	public String generateToken(Map<String, Object> claims, String subject) {
 		return buildToken(claims, subject);
 	}
 	
@@ -48,7 +49,7 @@ public class JwtService {
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 	
-	private String buildToken(HashMap<String, Object> claims, String subject) {
+	private String buildToken(Map<String, Object> claims, String subject) {
 		return Jwts
 				.builder()
 				.setClaims(claims)
