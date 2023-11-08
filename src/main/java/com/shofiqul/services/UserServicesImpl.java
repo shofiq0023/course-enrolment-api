@@ -1,7 +1,12 @@
 package com.shofiqul.services;
 
+import static com.shofiqul.utils.Consts.*;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -15,10 +20,15 @@ import org.springframework.stereotype.Service;
 
 import com.shofiqul.config.JwtService;
 import com.shofiqul.dto.UserAuthReq;
+import com.shofiqul.dto.UserDto;
 import com.shofiqul.dto.UserRegisterReq;
+import com.shofiqul.dto.UserRoleUpdateDto;
+import com.shofiqul.dto.UserUpdateReq;
 import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.UserService;
 import com.shofiqul.repo.UserRepo;
+import com.shofiqul.utils.Consts;
+import com.shofiqul.utils.Utility;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,13 +68,9 @@ public class UserServicesImpl implements UserService {
 
 	@Override
 	public ResponseEntity<?> userRegister(UserRegisterReq req) {
-		UserModel model = new UserModel();
-		model.setUsername(req.getUsername());
-		model.setEmail(req.getEmail());
-		model.setName(req.getName());
-		model.setRoles(req.getRoles());
-		model.setPassword(passwordEncoder.encode(req.getPassword()));
-		model.setSignupDate(new Timestamp(System.currentTimeMillis()));
+		UserModel model = Utility.copyProperties(req, UserModel.class);
+		model.setRoles(ROLE_USER);
+		model.setPassword(passwordEncoder.encode(model.getPassword()));
 		
 		UserModel savedModel = userRepo.save(model);
 		
@@ -73,5 +79,80 @@ public class UserServicesImpl implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public ResponseEntity<?> getUserDetails(long userId) {
+		Optional<UserModel> userOpt = userRepo.findById(userId);
+		
+		if (userOpt.isPresent()) {
+			UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
+			
+			return resService.createSuccessResponse(user, "User found", HttpStatus.FOUND);
+		} else {
+			return resService.createFailedResponse("No user found", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getAllUsers() {
+		List<UserModel> users = new ArrayList<UserModel>();
+		List<UserDto> userResponseList = new ArrayList<UserDto>();
+		
+		userRepo.findAll().forEach(users::add);
+		
+		if (!users.isEmpty()) {
+			for (UserModel u : users) {
+				UserDto dto = Utility.copyProperties(u, UserDto.class);
+				
+				dto.setRoles(Arrays.asList(u.getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE)));
+				
+				userResponseList.add(dto);
+			}
+			return resService.createSuccessResponse(userResponseList, "Users found", HttpStatus.FOUND);
+		} else {
+			return resService.createSuccessResponse(userResponseList, "No users were found", HttpStatus.NO_CONTENT);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> updateUser(long userId, UserUpdateReq reqDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<?> makeAdmin(long userId, UserRoleUpdateDto req) {
+		Optional<UserModel> userOpt = userRepo.findById(userId);
+		List<String> givenRoles = req.getRoles();
+		
+		if (userOpt.isPresent()) {
+			UserModel user = userOpt.get();
+			
+			List<String> userExistingRoles = new ArrayList<String>(
+					Arrays.asList(user.getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE)));
+			
+			for (String role : givenRoles) {
+				if (!userExistingRoles.contains(role)) {
+					userExistingRoles.add(role);
+				} else {
+					continue;
+				}
+				
+			}
+			
+			user.setRoles(String.join(", ", userExistingRoles));
+			UserModel savedUser = userRepo.save(user);
+			
+			if (savedUser == null) {
+				return resService.createFailedResponse("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			return resService.createSuccessResponse("Role updated", HttpStatus.OK);
+			
+		} else {
+			return resService.createFailedResponse("No user found", HttpStatus.NOT_FOUND);
+		}
+	}
+
 
 }

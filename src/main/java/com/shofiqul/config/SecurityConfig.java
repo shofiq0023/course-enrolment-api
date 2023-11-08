@@ -10,6 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.shofiqul.utils.Consts.*;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -18,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final AuthenticationProvider authProvider;
 	private final SecurityFilter securityFilter;
-	
-	private final String SUPER_ADMIN = "ROLE_SUPER_ADMIN";
-	private final String ADMIN = "ROLE_ADMIN";
-	private final String STUDENT = "ROLE_STUDENT";
+	private final CustomAccessDeniedHandler customAccessDeniedHandler;
 	
 	private final String[] apiWhiteList = {"/v1/user/authenticate", "/v1/user/register"};
 	
@@ -34,13 +33,14 @@ public class SecurityConfig {
 				req
 					.requestMatchers(apiWhiteList)
 					.permitAll()
-					.requestMatchers("/v1/student/**").hasAnyAuthority(SUPER_ADMIN, ADMIN, STUDENT)
-					.requestMatchers("/v1/admin/**").hasAnyAuthority(SUPER_ADMIN, ADMIN)
-					.requestMatchers("/v1/super/**").hasAnyAuthority(SUPER_ADMIN)
+					.requestMatchers("/v1/student/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER)
+					.requestMatchers("/v1/admin/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN)
+					.requestMatchers("/v1/super/**").hasAnyAuthority(ROLE_SUPER_ADMIN)
 					.anyRequest()
 					.authenticated()
 				
 			)
+			.exceptionHandling(e -> e.accessDeniedHandler(customAccessDeniedHandler))
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authProvider)
 			.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

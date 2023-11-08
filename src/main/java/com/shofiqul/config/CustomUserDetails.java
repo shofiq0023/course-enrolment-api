@@ -1,5 +1,6 @@
 package com.shofiqul.config;
 
+import static com.shofiqul.utils.Consts.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -20,7 +21,7 @@ public class CustomUserDetails implements UserDetails {
 	public CustomUserDetails(UserModel user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
-		this.authorities = Arrays.stream(user.getRoles().split(","))
+		this.authorities = Arrays.stream(user.getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE)) // Splits by "," and with or without space
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 

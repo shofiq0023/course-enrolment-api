@@ -1,5 +1,6 @@
 package com.shofiqul.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,10 @@ public class ResponseService {
 	public ResponseEntity<Map<String, Object>> createFailedResponse(Object data, HttpStatus status) {
 		return new ResponseEntity<Map<String, Object>>(addData(data, "Failed", status), status);
 	}
+	
+	public ResponseEntity<Map<String, Object>> createFailedResponse(String message, HttpStatus status) {
+		return new ResponseEntity<Map<String, Object>>(addData(new ArrayList<>(), message, status), status);
+	}
 
 	public ResponseEntity<Map<String, Object>> createFailedResponse(Object data, String message, HttpStatus status) {
 		return new ResponseEntity<Map<String, Object>>(addData(data, message, status), status);
@@ -33,7 +38,7 @@ public class ResponseService {
 	private Map<String, Object> addData(Object data, String message, HttpStatus status) {
 		this.output.put(DATA, data);
 		this.output.put(MESSAGE, message);
-		this.output.put(STATUS, status);
+		this.output.put(STATUS, status.value());
 
 		return output;
 	}
