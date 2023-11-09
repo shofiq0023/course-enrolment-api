@@ -1,8 +1,8 @@
 package com.shofiqul.services;
 
-import static com.shofiqul.utils.Consts.*;
+import static com.shofiqul.utils.Consts.COMMA_WITH_OR_WITHOUT_SPACE;
+import static com.shofiqul.utils.Consts.ROLE_USER;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,7 +27,6 @@ import com.shofiqul.dto.UserUpdateReq;
 import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.UserService;
 import com.shofiqul.repo.UserRepo;
-import com.shofiqul.utils.Consts;
 import com.shofiqul.utils.Utility;
 
 import lombok.RequiredArgsConstructor;

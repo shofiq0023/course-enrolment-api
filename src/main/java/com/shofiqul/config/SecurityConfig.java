@@ -1,5 +1,9 @@
 package com.shofiqul.config;
 
+import static com.shofiqul.utils.Consts.ROLE_ADMIN;
+import static com.shofiqul.utils.Consts.ROLE_SUPER_ADMIN;
+import static com.shofiqul.utils.Consts.ROLE_USER;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,8 +13,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static com.shofiqul.utils.Consts.*;
 
 import lombok.RequiredArgsConstructor;
 

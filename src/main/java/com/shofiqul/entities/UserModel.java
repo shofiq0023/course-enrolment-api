@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,9 @@ public class UserModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	@Column(unique = true)
 	private String username;
+	@Column(unique = true)
 	private String email;
 	private String password;
 	private String roles;

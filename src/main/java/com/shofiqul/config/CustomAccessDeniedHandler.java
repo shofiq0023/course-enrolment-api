@@ -1,8 +1,6 @@
 package com.shofiqul.config;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

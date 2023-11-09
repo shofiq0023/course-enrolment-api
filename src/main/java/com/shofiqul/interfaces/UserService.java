@@ -20,6 +20,4 @@ public interface UserService {
 	ResponseEntity<?> updateUser(long userId, UserUpdateReq reqDto);
 
 	ResponseEntity<?> makeAdmin(long userId, UserRoleUpdateDto req);
-
-
 }

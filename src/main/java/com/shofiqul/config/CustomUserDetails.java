@@ -1,6 +1,7 @@
 package com.shofiqul.config;
 
-import static com.shofiqul.utils.Consts.*;
+import static com.shofiqul.utils.Consts.COMMA_WITH_OR_WITHOUT_SPACE;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
