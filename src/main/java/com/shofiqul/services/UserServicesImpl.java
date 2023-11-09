@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.aspectj.weaver.ast.Instanceof;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,7 +51,7 @@ public class UserServicesImpl implements UserService {
 		boolean isPasswordMatches = encoder.matches(req.getPassword(), userOpt.get().getPassword());
 		
 		if (userOpt.isEmpty() || !isPasswordMatches) {
-			return resService.createFailedResponse("No user found", HttpStatus.NOT_FOUND);
+			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
 		}
 		
 		UserModel user = userOpt.get();
@@ -62,19 +65,24 @@ public class UserServicesImpl implements UserService {
 		
 		String token = jwtService.generateToken(claims, user.getUsername());
 		
-		return resService.createSuccessResponse(token, "User authenticated", HttpStatus.CREATED);
+		return resService.createResponse(token, "User authenticated", HttpStatus.CREATED);
 	}
 
 	@Override
 	public ResponseEntity<?> userRegister(UserRegisterReq req) {
+		UserModel savedModel = null;
 		UserModel model = Utility.copyProperties(req, UserModel.class);
 		model.setRoles(ROLE_USER);
 		model.setPassword(passwordEncoder.encode(model.getPassword()));
-		
-		UserModel savedModel = userRepo.save(model);
-		
+
+		try {
+			savedModel = userRepo.save(model);
+		} catch (DataIntegrityViolationException e) {
+			return resService.createDuplicateKeyResponse(e);
+		}
+
 		if (savedModel != null) {
-			return resService.createSuccessResponse(savedModel, HttpStatus.CREATED);
+			return resService.createResponse(savedModel, HttpStatus.CREATED);
 		}
 		return null;
 	}
@@ -86,9 +94,9 @@ public class UserServicesImpl implements UserService {
 		if (userOpt.isPresent()) {
 			UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
 			
-			return resService.createSuccessResponse(user, "User found", HttpStatus.FOUND);
+			return resService.createResponse(user, "User found", HttpStatus.FOUND);
 		} else {
-			return resService.createFailedResponse("No user found", HttpStatus.NOT_FOUND);
+			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -107,9 +115,9 @@ public class UserServicesImpl implements UserService {
 				
 				userResponseList.add(dto);
 			}
-			return resService.createSuccessResponse(userResponseList, "Users found", HttpStatus.FOUND);
+			return resService.createResponse(userResponseList, "Users found", HttpStatus.FOUND);
 		} else {
-			return resService.createSuccessResponse(userResponseList, "No users were found", HttpStatus.NO_CONTENT);
+			return resService.createResponse(userResponseList, "No users were found", HttpStatus.NO_CONTENT);
 		}
 	}
 
@@ -143,13 +151,13 @@ public class UserServicesImpl implements UserService {
 			UserModel savedUser = userRepo.save(user);
 			
 			if (savedUser == null) {
-				return resService.createFailedResponse("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
+				return resService.createResponse("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
-			return resService.createSuccessResponse("Role updated", HttpStatus.OK);
+			return resService.createResponse("Role updated", HttpStatus.OK);
 			
 		} else {
-			return resService.createFailedResponse("No user found", HttpStatus.NOT_FOUND);
+			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
 		}
 	}
 

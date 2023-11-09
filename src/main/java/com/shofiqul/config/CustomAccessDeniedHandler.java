@@ -24,7 +24,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		ResponseEntity<?> responseEntity = resService.createFailedResponse("Access Denied", HttpStatus.FORBIDDEN);
+		ResponseEntity<?> responseEntity = resService.createResponse("Access Denied", HttpStatus.FORBIDDEN);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(responseEntity.getBody());
