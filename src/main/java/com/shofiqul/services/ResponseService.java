@@ -22,25 +22,12 @@ public class ResponseService {
 	}
 
 	public ResponseEntity<Map<String, Object>> createResponse(String message, HttpStatus status) {
-		return new ResponseEntity<Map<String, Object>>(addData(new ArrayList<>(), "Success", status), status);
+		return new ResponseEntity<Map<String, Object>>(addData(new ArrayList<>(), message, status), status);
 	}
 	
 	public ResponseEntity<Map<String, Object>> createResponse(Object data, String message, HttpStatus status) {
 		return new ResponseEntity<Map<String, Object>>(addData(data, message, status), status);
 	}
-	
-
-//	public ResponseEntity<Map<String, Object>> createFailedResponse(Object data, HttpStatus status) {
-//		return new ResponseEntity<Map<String, Object>>(addData(data, "Failed", status), status);
-//	}
-//	
-//	public ResponseEntity<Map<String, Object>> createFailedResponse(String message, HttpStatus status) {
-//		return new ResponseEntity<Map<String, Object>>(addData(new ArrayList<>(), message, status), status);
-//	}
-//
-//	public ResponseEntity<Map<String, Object>> createFailedResponse(Object data, String message, HttpStatus status) {
-//		return new ResponseEntity<Map<String, Object>>(addData(data, message, status), status);
-//	}
 	
 	public ResponseEntity<Map<String, Object>> createDuplicateKeyResponse(DataIntegrityViolationException e) {
 		ResponseEntity<Map<String, Object>> res = null;

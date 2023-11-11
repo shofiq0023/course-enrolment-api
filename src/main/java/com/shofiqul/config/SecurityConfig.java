@@ -1,6 +1,7 @@
 package com.shofiqul.config;
 
 import static com.shofiqul.utils.Consts.ROLE_ADMIN;
+import static com.shofiqul.utils.Consts.WHITELIST_APIS;
 import static com.shofiqul.utils.Consts.ROLE_SUPER_ADMIN;
 import static com.shofiqul.utils.Consts.ROLE_USER;
 
@@ -24,16 +25,13 @@ public class SecurityConfig {
 	private final SecurityFilter securityFilter;
 	private final CustomAccessDeniedHandler customAccessDeniedHandler;
 	
-	private final String[] apiWhiteList = {"/v1/user/authenticate", "/v1/user/register"};
-	
-	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(req ->
 				req
-					.requestMatchers(apiWhiteList)
+					.requestMatchers(WHITELIST_APIS)
 					.permitAll()
 					.requestMatchers("/v1/student/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER)
 					.requestMatchers("/v1/admin/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN)

@@ -39,8 +39,8 @@ import lombok.RequiredArgsConstructor;
 public class UserServicesImpl implements UserService {
 	private final UserRepo userRepo;
 	private final PasswordEncoder passwordEncoder;
-	private final ResponseService resService;
 	private final AuthenticationManager authManager;
+	private final ResponseService resService;
 	private final JwtService jwtService;
 	
 	@Override
@@ -93,6 +93,9 @@ public class UserServicesImpl implements UserService {
 		
 		if (userOpt.isPresent()) {
 			UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
+			user.setRoles(
+					Arrays.asList(userOpt.get().getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE))
+				);
 			
 			return resService.createResponse(user, "User found", HttpStatus.FOUND);
 		} else {
@@ -159,6 +162,12 @@ public class UserServicesImpl implements UserService {
 		} else {
 			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@Override
+	public ResponseEntity<?> deleteUser(long userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
