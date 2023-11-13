@@ -126,48 +126,39 @@ public class UserServicesImpl implements UserService {
 
 	@Override
 	public ResponseEntity<?> updateUser(long userId, UserUpdateReq reqDto) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<UserModel> userOpt = userRepo.findById(userId);
+		
+		if (userOpt.isEmpty()) {
+			return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
+		}
+		
+		UserModel user = userOpt.get();
+		user.setEmail(reqDto.getEmail());
+		user.setName(reqDto.getName());
+		user.setMobile(reqDto.getMobile());
+		user.setAddress(reqDto.getAddress());
+		
+		UserModel updatedUserModel = userRepo.save(user);
+		
+		if (updatedUserModel == null) {
+			return resService.createResponse("Could not update information", HttpStatus.CONFLICT);
+		}
+		
+		return resService.createResponse("User information updated", HttpStatus.OK);
 	}
 
-	@Override
-	public ResponseEntity<?> makeAdmin(long userId, UserRoleUpdateDto req) {
-		Optional<UserModel> userOpt = userRepo.findById(userId);
-		List<String> givenRoles = req.getRoles();
-		
-		if (userOpt.isPresent()) {
-			UserModel user = userOpt.get();
-			
-			List<String> userExistingRoles = new ArrayList<String>(
-					Arrays.asList(user.getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE)));
-			
-			for (String role : givenRoles) {
-				if (!userExistingRoles.contains(role)) {
-					userExistingRoles.add(role);
-				} else {
-					continue;
-				}
-				
-			}
-			
-			user.setRoles(String.join(", ", userExistingRoles));
-			UserModel savedUser = userRepo.save(user);
-			
-			if (savedUser == null) {
-				return resService.createResponse("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			
-			return resService.createResponse("Role updated", HttpStatus.OK);
-			
-		} else {
-			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
-		}
-	}
 
 	@Override
 	public ResponseEntity<?> deleteUser(long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<UserModel> userOpt = userRepo.findById(userId);
+		
+		if (userOpt.isEmpty()) {
+			return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
+		}
+		
+		userRepo.deleteById(userId);
+		
+		return resService.createResponse("User delete successful", HttpStatus.OK);
 	}
 
 

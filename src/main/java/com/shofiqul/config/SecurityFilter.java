@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -78,6 +79,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 			} else if (e instanceof ExpiredJwtException) {
 				status = HttpStatus.UNAUTHORIZED;
 				responseEntity = resService.createResponse("Token expired!", status);
+			} else if (e instanceof UsernameNotFoundException) {
+				status = HttpStatus.NOT_FOUND;
+				responseEntity = resService.createResponse("User not found", status);
 			} else {
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 				responseEntity = resService.createResponse("Something went wrong!", status);
