@@ -75,4 +75,13 @@ public class CourseServiceImpl implements CourseService {
 		return resService.createResponse("Course updated", HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<?> getAllCoursesByStatus() {
+		List<CourseModel> courses = new ArrayList<CourseModel>();
+		
+		courseRepo.findAllByActive(true).forEach(courses::add);
+		
+		return resService.createResponse(courses, "Courses found", HttpStatus.FOUND);
+	}
+
 }

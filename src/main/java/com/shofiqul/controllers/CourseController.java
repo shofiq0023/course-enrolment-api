@@ -31,11 +31,6 @@ public class CourseController {
 		return courseService.getCourse(courseId);
 	}
 	
-	@GetMapping("/all")
-	public ResponseEntity<?> getAllCourses() {
-		return courseService.getAllCourses();
-	}
-	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateCourse(@PathVariable("id") long courseId, @RequestBody CourseDto dto) {
 		return courseService.updateCourse(courseId, dto);

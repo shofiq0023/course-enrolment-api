@@ -6,24 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shofiqul.interfaces.CourseService;
-import com.shofiqul.interfaces.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/admin")
+@RequestMapping("/v1/student")
 @RequiredArgsConstructor
-public class AdminControllers {
-	private final UserService userService;
+public class StudentController {
 	private final CourseService courseService;
 	
-	@GetMapping("/users")
-	public ResponseEntity<?> getAllUsers() {
-		return userService.getAllUsers();
-	}
-	
 	@GetMapping("/courses")
-	public ResponseEntity<?> getAllCourses() {
-		return courseService.getAllCourses();
+	public ResponseEntity<?> getAllCoursesByStatus() {
+		return courseService.getAllCoursesByStatus();
 	}
 }

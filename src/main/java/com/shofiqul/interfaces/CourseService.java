@@ -15,4 +15,6 @@ public interface CourseService {
 
 	ResponseEntity<?> updateCourse(long courseId, CourseDto dto);
 
+	ResponseEntity<?> getAllCoursesByStatus();
+
 }
