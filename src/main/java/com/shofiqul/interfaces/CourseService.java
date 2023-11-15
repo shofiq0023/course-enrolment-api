@@ -8,4 +8,8 @@ public interface CourseService {
 
 	ResponseEntity<?> createCourse(CourseReqDto dto);
 
+	ResponseEntity<?> getCourse(long courseId);
+
+	ResponseEntity<?> getAllCourses();
+
 }
