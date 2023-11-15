@@ -1,9 +1,6 @@
 package com.shofiqul.config;
 
-import static com.shofiqul.utils.Consts.ROLE_ADMIN;
-import static com.shofiqul.utils.Consts.WHITELIST_APIS;
-import static com.shofiqul.utils.Consts.ROLE_SUPER_ADMIN;
-import static com.shofiqul.utils.Consts.ROLE_USER;
+import static com.shofiqul.utils.Consts.*;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +31,7 @@ public class SecurityConfig {
 					.requestMatchers(WHITELIST_APIS)
 					.permitAll()
 					.requestMatchers("/v1/student/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER)
+					.requestMatchers("/v1/course/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_INSTRUCTOR)
 					.requestMatchers("/v1/admin/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN)
 					.requestMatchers("/v1/super/**").hasAnyAuthority(ROLE_SUPER_ADMIN)
 					.anyRequest()
