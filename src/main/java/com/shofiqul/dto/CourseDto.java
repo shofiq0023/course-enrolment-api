@@ -14,4 +14,5 @@ public class CourseDto {
 	private String topic;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Timestamp createdTime;
+	private boolean active;
 }

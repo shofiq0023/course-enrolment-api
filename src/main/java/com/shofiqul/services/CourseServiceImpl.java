@@ -56,4 +56,23 @@ public class CourseServiceImpl implements CourseService {
 		return resService.createResponse(courses, HttpStatus.FOUND);
 	}
 
+	@Override
+	public ResponseEntity<?> updateCourse(long courseId, CourseDto dto) {
+		Optional<CourseModel> existingCourse = courseRepo.findById(courseId);
+		
+		if (existingCourse.isEmpty()) return resService.createResponse("Course not found", HttpStatus.NOT_FOUND);
+		
+		CourseModel course = existingCourse.get();
+		course.setTitle(dto.getTitle());
+		course.setDescription(dto.getDescription());
+		course.setTopic(dto.getTopic());
+		course.setActive(dto.isActive());
+		
+		CourseModel savedCourse = courseRepo.save(course);
+		
+		if (savedCourse == null) return resService.createResponse("Could not update the course", HttpStatus.CONFLICT);
+		
+		return resService.createResponse("Course updated", HttpStatus.OK);
+	}
+
 }

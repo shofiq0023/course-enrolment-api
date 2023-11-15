@@ -9,6 +9,6 @@ public class Consts {
 	public static final String COMMA_WITH_OR_WITHOUT_SPACE = "\s*,\s*";
 	
 	public static final String[] WHITELIST_APIS = {"/v1/user/authenticate", "/v1/user/register"};
-	public static final String[] INSTRUCTOR_APIS = {"/v1/course/create", "/v1/course/update"};
+	public static final String[] INSTRUCTOR_APIS = {"/v1/course/create", "/v1/course/update/**"};
 	public static final String[] OPEN_COURSE_APIS = {"/v1/course/all", "/v1/course/instructor/**"};
 }

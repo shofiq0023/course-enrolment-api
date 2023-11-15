@@ -45,14 +45,14 @@ public class UserServicesImpl implements UserService {
 	
 	@Override
 	public ResponseEntity<?> userAuthenticate(UserAuthReq req) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
 		Optional<UserModel> userOpt = userRepo.findByUsername(req.getUsername());
+		
+		if (userOpt.isEmpty()) return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		boolean isPasswordMatches = encoder.matches(req.getPassword(), userOpt.get().getPassword());
 		
-		if (userOpt.isEmpty() || !isPasswordMatches) {
-			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
-		}
+		if (!isPasswordMatches) return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
 		
 		UserModel user = userOpt.get();
 		Map<String, Object> claims = new HashMap<String, Object>();
