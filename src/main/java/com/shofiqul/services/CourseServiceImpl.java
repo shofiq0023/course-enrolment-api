@@ -84,4 +84,17 @@ public class CourseServiceImpl implements CourseService {
 		return resService.createResponse(courses, "Courses found", HttpStatus.FOUND);
 	}
 
+	@Override
+	public ResponseEntity<?> deleteCourse(long courseId) {
+		boolean courseExist = courseRepo.existsById(courseId);
+		
+		if (courseExist) {
+			courseRepo.deleteById(courseId);
+			return resService.createResponse("Course deleted", HttpStatus.OK);
+		} else {
+			return resService.createResponse("Course not found", HttpStatus.NOT_FOUND);
+		}
+		
+	}
+
 }

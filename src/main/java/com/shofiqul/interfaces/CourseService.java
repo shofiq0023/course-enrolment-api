@@ -17,4 +17,6 @@ public interface CourseService {
 
 	ResponseEntity<?> getAllCoursesByStatus();
 
+	ResponseEntity<?> deleteCourse(long courseId);
+
 }

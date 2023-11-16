@@ -32,6 +32,7 @@ public class SecurityConfig {
 					.permitAll()
 					.requestMatchers("/v1/student/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER)
 					.requestMatchers("/v1/course/create", "/v1/course/update/**", "/v1/instructor/**").hasAuthority(ROLE_INSTRUCTOR)
+					.requestMatchers("v1/course/delete/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_INSTRUCTOR)
 					.requestMatchers(OPEN_COURSE_APIS).hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_USER, ROLE_INSTRUCTOR)
 					.requestMatchers("/v1/admin/**").hasAnyAuthority(ROLE_SUPER_ADMIN, ROLE_ADMIN)
 					.requestMatchers("/v1/super/**").hasAnyAuthority(ROLE_SUPER_ADMIN)
