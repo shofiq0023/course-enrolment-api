@@ -7,13 +7,17 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.shofiqul.dto.CourseDto;
 import com.shofiqul.dto.CourseReqDto;
 import com.shofiqul.entities.CourseModel;
+import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.CourseRepo;
 import com.shofiqul.interfaces.CourseService;
+import com.shofiqul.repo.UserRepo;
 import com.shofiqul.utils.Utility;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +26,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 	private final CourseRepo courseRepo;
+	private final UserRepo userRepo;
 	private final ResponseService resService;
 
 	@Override
 	public ResponseEntity<?> createCourse(CourseReqDto dto) {
+		boolean courseExists = courseRepo.existsByTitleAndActive(dto.getTitle(), true);
+		if (courseExists) return resService.createResponse("Course with the given title already exist", HttpStatus.CONFLICT);
+		
 		CourseModel course = Utility.copyProperties(dto, CourseModel.class);
+		
+		// Get the user-name of the currently authenticated user
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserModel> user = userRepo.findByUsername(name);
+		
 		course.setCreatedTime(new Timestamp(System.currentTimeMillis()));
+		course.setInstructor(user.get());
 		
 		CourseModel savedCourse = courseRepo.save(course);
 		
