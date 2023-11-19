@@ -21,4 +21,6 @@ public interface CourseService {
 
 	ResponseEntity<?> getCourseByInstructor(long instructorId);
 
+	ResponseEntity<?> getInstructors();
+
 }

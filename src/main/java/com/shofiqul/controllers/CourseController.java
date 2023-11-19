@@ -46,4 +46,10 @@ public class CourseController {
 	public ResponseEntity<?> getCourseByInstructor(@PathVariable("id") long instructorId) {
 		return courseService.getCourseByInstructor(instructorId);
 	}
+	
+	@GetMapping("/instructors")
+	public ResponseEntity<?> getInstructors() {
+		return courseService.getInstructors();
+	}
+	
 }

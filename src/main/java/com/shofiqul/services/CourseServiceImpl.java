@@ -1,9 +1,12 @@
 package com.shofiqul.services;
 
+import static com.shofiqul.utils.Consts.*;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.shofiqul.dto.CourseDto;
 import com.shofiqul.dto.CourseReqDto;
+import com.shofiqul.dto.UserDto;
 import com.shofiqul.entities.CourseModel;
 import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.CourseRepo;
@@ -121,7 +125,20 @@ public class CourseServiceImpl implements CourseService {
 		
 		if (courses.isEmpty()) return resService.createResponse("Not courses under the given instructor", HttpStatus.NOT_FOUND);
 		
-		return resService.createResponse(courses, HttpStatus.OK);
+		return resService.createResponse(courses, "Courses were found", HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> getInstructors() {
+		List<UserModel> instructors = new ArrayList<UserModel>();
+		
+		instructors = userRepo.findAllByRolesLike(ROLE_INSTRUCTOR);
+		
+		if (instructors.isEmpty()) return resService.createResponse("No instructors were found", HttpStatus.NOT_FOUND);
+		
+		List<UserDto> instructorsRes = instructors.stream().map(i -> Utility.copyProperties(i, UserDto.class)).collect(Collectors.toList());
+		
+		return resService.createResponse(instructorsRes, "Instructors found", HttpStatus.OK);
 	}
 
 }
