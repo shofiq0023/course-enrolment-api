@@ -141,4 +141,13 @@ public class CourseServiceImpl implements CourseService {
 		return resService.createResponse(instructorsRes, "Instructors found", HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<?> getCoursesByTopic(String topic) {
+		List<CourseModel> courses = new ArrayList<CourseModel>();
+		
+		courses = courseRepo.findAllByActiveAndTopicLike(true, topic);
+		
+		return resService.createResponse(courses, HttpStatus.OK);
+	}
+
 }

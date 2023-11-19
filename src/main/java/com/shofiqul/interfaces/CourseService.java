@@ -23,4 +23,6 @@ public interface CourseService {
 
 	ResponseEntity<?> getInstructors();
 
+	ResponseEntity<?> getCoursesByTopic(String topic);
+
 }

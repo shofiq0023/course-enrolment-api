@@ -11,9 +11,11 @@ public interface CourseRepo extends JpaRepository<CourseModel, Long> {
 
 	List<CourseModel> findAllByActive(boolean b);
 
-	@Query("")
 	boolean existsByTitleAndActive(String title, boolean b);
 
 	List<CourseModel> findAllByActiveAndInstructorId(boolean b, long instructorId);
+
+	@Query("FROM CourseModel WHERE topic LIKE %:topic% and active=:b")
+	List<CourseModel> findAllByActiveAndTopicLike(boolean b, String topic);
 
 }
