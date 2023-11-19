@@ -1,5 +1,7 @@
 package com.shofiqul.controllers;
 
+import static com.shofiqul.utils.Consts.*;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +32,12 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> userRegister(@RequestBody UserRegisterReq req) {
-		return userService.userRegister(req);
+		return userService.userRegister(req, ROLE_USER);
+	}
+	
+	@PostMapping("/register/instructor")
+	public ResponseEntity<?> instructorRegister(@RequestBody UserRegisterReq req) {
+		return userService.userRegister(req, ROLE_INSTRUCTOR);
 	}
 	
 	@GetMapping("/{id}")

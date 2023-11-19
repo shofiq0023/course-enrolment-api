@@ -11,7 +11,7 @@ public interface UserService {
 
 	ResponseEntity<?> userAuthenticate(UserAuthReq req);
 
-	ResponseEntity<?> userRegister(UserRegisterReq req);
+	ResponseEntity<?> userRegister(UserRegisterReq req, String role);
 
 	ResponseEntity<?> getUserDetails(long userId);
 

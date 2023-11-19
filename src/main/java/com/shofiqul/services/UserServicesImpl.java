@@ -1,7 +1,6 @@
 package com.shofiqul.services;
 
-import static com.shofiqul.utils.Consts.COMMA_WITH_OR_WITHOUT_SPACE;
-import static com.shofiqul.utils.Consts.ROLE_USER;
+import static com.shofiqul.utils.Consts.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.aspectj.weaver.ast.Instanceof;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,6 @@ import com.shofiqul.config.JwtService;
 import com.shofiqul.dto.UserAuthReq;
 import com.shofiqul.dto.UserDto;
 import com.shofiqul.dto.UserRegisterReq;
-import com.shofiqul.dto.UserRoleUpdateDto;
 import com.shofiqul.dto.UserUpdateReq;
 import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.UserService;
@@ -69,10 +65,16 @@ public class UserServicesImpl implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<?> userRegister(UserRegisterReq req) {
+	public ResponseEntity<?> userRegister(UserRegisterReq req, String role) {
 		UserModel savedModel = null;
 		UserModel model = Utility.copyProperties(req, UserModel.class);
-		model.setRoles(ROLE_USER);
+		
+		if (!role.equals(ROLE_USER)) {
+			model.setRoles(ROLE_USER + ", " + role);
+		} else {
+			model.setRoles(role);
+		}
+		
 		model.setPassword(passwordEncoder.encode(model.getPassword()));
 
 		try {
