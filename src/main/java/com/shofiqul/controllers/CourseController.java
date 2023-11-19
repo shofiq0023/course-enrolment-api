@@ -41,4 +41,9 @@ public class CourseController {
 	public ResponseEntity<?> deleteCourse(@PathVariable("id") long courseId) {
 		return courseService.deleteCourse(courseId);
 	}
+	
+	@GetMapping("/instructor/{id}")
+	public ResponseEntity<?> getCourseByInstructor(@PathVariable("id") long instructorId) {
+		return courseService.getCourseByInstructor(instructorId);
+	}
 }

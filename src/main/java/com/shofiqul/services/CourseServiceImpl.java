@@ -111,4 +111,17 @@ public class CourseServiceImpl implements CourseService {
 		
 	}
 
+	@Override
+	public ResponseEntity<?> getCourseByInstructor(long instructorId) {
+		boolean instructorExists = userRepo.existsById(instructorId);
+		
+		if (!instructorExists) return resService.createResponse("Instructor was not found", HttpStatus.NOT_FOUND);
+		
+		List<CourseModel> courses = courseRepo.findAllByActiveAndInstructorId(true, instructorId);
+		
+		if (courses.isEmpty()) return resService.createResponse("Not courses under the given instructor", HttpStatus.NOT_FOUND);
+		
+		return resService.createResponse(courses, HttpStatus.OK);
+	}
+
 }

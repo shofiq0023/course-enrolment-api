@@ -14,4 +14,6 @@ public interface CourseRepo extends JpaRepository<CourseModel, Long> {
 	@Query("")
 	boolean existsByTitleAndActive(String title, boolean b);
 
+	List<CourseModel> findAllByActiveAndInstructorId(boolean b, long instructorId);
+
 }
