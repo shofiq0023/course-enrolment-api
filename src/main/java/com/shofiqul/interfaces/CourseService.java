@@ -25,4 +25,6 @@ public interface CourseService {
 
 	ResponseEntity<?> getCoursesByTopic(String topic);
 
+	ResponseEntity<?> searchCourses(String searchText);
+
 }

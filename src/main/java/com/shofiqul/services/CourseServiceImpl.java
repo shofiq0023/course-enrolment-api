@@ -147,7 +147,19 @@ public class CourseServiceImpl implements CourseService {
 		
 		courses = courseRepo.findAllByActiveAndTopicLike(true, topic);
 		
+		if (courses.isEmpty()) return resService.createResponse("No courses found with the given topic", HttpStatus.NOT_FOUND);
+		
 		return resService.createResponse(courses, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> searchCourses(String searchText) {
+		List<CourseModel> courses = new ArrayList<CourseModel>();
+		courses = courseRepo.searchCourse(searchText);
+		
+		if (courses.isEmpty()) return resService.createResponse("No courses were found", HttpStatus.NO_CONTENT);
+		
+		return resService.createResponse(courses, "Courses found", HttpStatus.OK);
 	}
 
 }

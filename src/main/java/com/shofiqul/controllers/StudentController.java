@@ -25,4 +25,9 @@ public class StudentController {
 	public ResponseEntity<?> getCoursesByTopic(@RequestParam("topic") String topic) {
 		return courseService.getCoursesByTopic(topic);
 	}
+	
+	@GetMapping("/courses/search")
+	public ResponseEntity<?> searchCourses(@RequestParam("t") String searchText) {
+		return courseService.searchCourses(searchText);
+	}
 }

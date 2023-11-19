@@ -18,4 +18,7 @@ public interface CourseRepo extends JpaRepository<CourseModel, Long> {
 	@Query("FROM CourseModel WHERE topic LIKE %:topic% and active=:b")
 	List<CourseModel> findAllByActiveAndTopicLike(boolean b, String topic);
 
+	@Query("FROM CourseModel WHERE active=true AND title LIKE %:searchText% OR topic LIKE %:searchText%")
+	List<CourseModel> searchCourse(String searchText);
+
 }
