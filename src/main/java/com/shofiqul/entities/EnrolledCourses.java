@@ -1,6 +1,6 @@
 package com.shofiqul.entities;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -14,6 +14,8 @@ import lombok.Data;
 public class EnrolledCourses {
 	@EmbeddedId
 	private EnrolledCoursesPK enrolledCoursesPK;
-	@Column(name = "enrolment_date")
-	private Timestamp enrolmentDate = new Timestamp(System.currentTimeMillis());
+	
+	@Column(name = "enrollment_date")
+	private LocalDateTime enrollmentDate = LocalDateTime.now();
+	
 }

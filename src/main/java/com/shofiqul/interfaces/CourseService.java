@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.shofiqul.dto.CourseDto;
 import com.shofiqul.dto.CourseReqDto;
+import com.shofiqul.dto.StudentEnrollmentReqDto;
 
 public interface CourseService {
 
@@ -26,5 +27,7 @@ public interface CourseService {
 	ResponseEntity<?> getCoursesByTopic(String topic);
 
 	ResponseEntity<?> searchCourses(String searchText);
+
+	ResponseEntity<?> studentEnrollment(StudentEnrollmentReqDto dto);
 
 }

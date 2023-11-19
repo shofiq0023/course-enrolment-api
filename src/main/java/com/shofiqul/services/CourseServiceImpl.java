@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.shofiqul.dto.CourseDto;
 import com.shofiqul.dto.CourseReqDto;
+import com.shofiqul.dto.StudentEnrollmentReqDto;
 import com.shofiqul.dto.UserDto;
 import com.shofiqul.entities.CourseModel;
 import com.shofiqul.entities.UserModel;
@@ -160,6 +162,26 @@ public class CourseServiceImpl implements CourseService {
 		if (courses.isEmpty()) return resService.createResponse("No courses were found", HttpStatus.NO_CONTENT);
 		
 		return resService.createResponse(courses, "Courses found", HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> studentEnrollment(StudentEnrollmentReqDto dto) {
+		Optional<UserModel> userOpt = userRepo.findById(dto.getUserId());
+		if (userOpt.isEmpty()) return resService.createResponse("No user found with the given id", HttpStatus.NOT_FOUND);
+		
+		Optional<CourseModel> courseOpt = courseRepo.findById(dto.getCourseId());
+		if (courseOpt.isEmpty()) return resService.createResponse("No course found with the given id", HttpStatus.NOT_FOUND);
+		
+		CourseModel course = courseOpt.get();
+		Set<UserModel> existingStdents = course.getStudents();
+		existingStdents.add(userOpt.get());
+		course.setStudents(existingStdents);
+		
+		CourseModel updatedCourse = courseRepo.save(course);
+		
+		if (updatedCourse == null) return resService.createResponse("Could not enroll a student", HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		return resService.createResponse("Enrollment successful", HttpStatus.OK);
 	}
 
 }
