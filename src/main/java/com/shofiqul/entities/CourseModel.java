@@ -32,11 +32,11 @@ public class CourseModel {
 	private Timestamp createdTime;
 	private boolean active = true;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "instructor_id")
 	private UserModel instructor;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	@JoinTable(
 		name = "enrolled_courses",
 		joinColumns = @JoinColumn(name = "course_id"),
