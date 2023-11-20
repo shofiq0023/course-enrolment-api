@@ -159,8 +159,6 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseModel> courses = new ArrayList<CourseModel>();
 		courses = courseRepo.searchCourse(searchText);
 		
-		if (courses.isEmpty()) return resService.createResponse("No courses were found", HttpStatus.NO_CONTENT);
-		
 		return resService.createResponse(courses, "Courses found", HttpStatus.OK);
 	}
 
@@ -173,7 +171,7 @@ public class CourseServiceImpl implements CourseService {
 		if (courseOpt.isEmpty()) return resService.createResponse("No course found with the given id", HttpStatus.NOT_FOUND);
 		
 		CourseModel course = courseOpt.get();
-		Set<UserModel> existingStdents = course.getStudents();
+		List<UserModel> existingStdents = course.getStudents();
 		existingStdents.add(userOpt.get());
 		course.setStudents(existingStdents);
 		

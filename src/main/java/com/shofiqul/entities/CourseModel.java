@@ -1,10 +1,12 @@
 package com.shofiqul.entities;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,13 +36,13 @@ public class CourseModel {
 	@JoinColumn(name = "instructor_id")
 	private UserModel instructor;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "enrolled_courses",
 		joinColumns = @JoinColumn(name = "course_id"),
 		inverseJoinColumns = @JoinColumn(name = "user_id")
 	)
-	Set<UserModel> students;
+	private List<UserModel> students;
 }
 
 

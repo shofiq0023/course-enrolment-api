@@ -2,11 +2,13 @@ package com.shofiqul.entities;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,5 +41,5 @@ public class UserModel {
 	
 	@ManyToMany(mappedBy = "students")
 	@JsonBackReference
-	private Set<CourseModel> courses;
+	private List<CourseModel> courses;
 }
