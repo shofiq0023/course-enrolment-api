@@ -2,6 +2,7 @@ package com.shofiqul.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,5 +44,10 @@ public class StudentController {
 	@PutMapping("/deroll")
 	public ResponseEntity<?> studentDerollment(@RequestBody StudentEnrollmentReqDto dto) {
 		return courseService.studentDerollment(dto);
+	}
+	
+	@GetMapping("/course/{id}")
+	public ResponseEntity<?> getCourseWithStudentInfo(@PathVariable("id") long courseId) {
+		return courseService.getCourseWithStudentInfo(courseId);
 	}
 }

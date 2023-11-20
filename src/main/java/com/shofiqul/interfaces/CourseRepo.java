@@ -1,6 +1,7 @@
 package com.shofiqul.interfaces;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +21,7 @@ public interface CourseRepo extends JpaRepository<CourseModel, Long> {
 
 	@Query("FROM CourseModel WHERE active=true AND title LIKE %:searchText% OR topic LIKE %:searchText%")
 	List<CourseModel> searchCourse(String searchText);
+
+	Optional<CourseModel> findByIdAndActive(long courseId, boolean b);
 
 }

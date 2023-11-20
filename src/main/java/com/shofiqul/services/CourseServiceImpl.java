@@ -208,4 +208,23 @@ public class CourseServiceImpl implements CourseService {
 		
 		return count;
 	}
+
+	@Override
+	public ResponseEntity<?> getCourseWithStudentInfo(long courseId) {
+		Optional<CourseModel> course = courseRepo.findByIdAndActive(courseId, true);
+		
+		if (course.isEmpty()) return resService.createResponse("No course found", HttpStatus.NOT_FOUND);
+		
+		CourseDto courseDto = convertCourseModelToDto(course.get());
+		
+		return resService.createResponse(courseDto, HttpStatus.OK);
+	}
+
+	protected CourseDto convertCourseModelToDto(CourseModel course) {
+		CourseDto dto = Utility.copyProperties(course, CourseDto.class);
+		dto.setStudents(course.getStudents()
+				.stream().map(s -> Utility.copyProperties(s, UserDto.class))
+				.collect(Collectors.toList()));
+		return dto;
+	}
 }

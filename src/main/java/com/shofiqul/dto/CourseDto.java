@@ -1,6 +1,7 @@
 package com.shofiqul.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,4 +16,5 @@ public class CourseDto {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Timestamp createdTime;
 	private boolean active;
+	private List<UserDto> students;
 }
