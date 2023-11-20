@@ -174,6 +174,10 @@ public class CourseServiceImpl implements CourseService {
 		Optional<CourseModel> courseOpt = courseRepo.findById(dto.getCourseId());
 		if (courseOpt.isEmpty()) return resService.createResponse("No course found with the given id", HttpStatus.NOT_FOUND);
 		
+		boolean alreadyEnrolled = enrollmentRepo.existsByUserIdAndCourseId(dto.getUserId(), dto.getCourseId());
+		
+		if (alreadyEnrolled) return resService.createResponse("Alreay enrolled in this course", HttpStatus.CONFLICT);
+		
 		CourseModel course = courseOpt.get();
 		List<UserModel> existingStdents = course.getStudents();
 		existingStdents.add(userOpt.get());

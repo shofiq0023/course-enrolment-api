@@ -20,4 +20,9 @@ public interface EnrolledCoursesRepo extends JpaRepository<EnrolledCourses, Enro
 	@Modifying
 	@Query("DELETE FROM EnrolledCourses ec WHERE ec.enrolledCoursesId.courseId=:courseId")
 	int deleteByCourseId(long courseId);
+
+	@Query("SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END "
+		 + "FROM EnrolledCourses ec "
+		 + "WHERE ec.enrolledCoursesId.userId=:userId AND ec.enrolledCoursesId.courseId=:courseId")
+	boolean existsByUserIdAndCourseId(long userId, long courseId);
 }
