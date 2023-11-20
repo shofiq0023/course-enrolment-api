@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,7 +92,14 @@ public class UserServicesImpl implements UserService {
 
 	@Override
 	public ResponseEntity<?> getUserDetails(long userId) {
-		Optional<UserModel> userOpt = userRepo.findById(userId);
+		Optional<UserModel> userOpt = Optional.empty();
+		
+		if (userId == 0) {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			userOpt = userRepo.findByUsername(username);
+		} else {
+			userOpt = userRepo.findById(userId);
+		}
 		
 		if (userOpt.isPresent()) {
 			UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
@@ -127,8 +135,9 @@ public class UserServicesImpl implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<?> updateUser(long userId, UserUpdateReq reqDto) {
-		Optional<UserModel> userOpt = userRepo.findById(userId);
+	public ResponseEntity<?> updateUser(UserUpdateReq reqDto) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Optional<UserModel> userOpt = userRepo.findByUsername(username);
 		
 		if (userOpt.isEmpty()) {
 			return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
@@ -152,16 +161,27 @@ public class UserServicesImpl implements UserService {
 
 	@Override
 	public ResponseEntity<?> deleteUser(long userId) {
-		Optional<UserModel> userOpt = userRepo.findById(userId);
+		Optional<UserModel> userOpt = Optional.empty();
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		if (userId == 0) {
+			userOpt = userRepo.findByUsername(username);
+		} else {
+			userOpt = userRepo.findById(userId);
+		}
 		
 		if (userOpt.isEmpty()) {
 			return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
+		} else {
+			if (userId == 0) {
+				userRepo.deleteByUsername(username);
+			} else {
+				userRepo.deleteById(userId);
+			}
 		}
 		
-		userRepo.deleteById(userId);
 		
 		return resService.createResponse("User delete successful", HttpStatus.OK);
 	}
-
 
 }

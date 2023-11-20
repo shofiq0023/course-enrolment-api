@@ -40,18 +40,18 @@ public class UserController {
 		return userService.userRegister(req, ROLE_INSTRUCTOR);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getUserDetails(@PathVariable("id") long userId) {
-		return userService.getUserDetails(userId);
+	@GetMapping()
+	public ResponseEntity<?> getUserDetails() {
+		return userService.getUserDetails(0);
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable("id") long userId, @RequestBody UserUpdateReq reqDto) {
-		return userService.updateUser(userId, reqDto);
+	@PutMapping()
+	public ResponseEntity<?> updateUser(@RequestBody UserUpdateReq reqDto) {
+		return userService.updateUser(reqDto);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable("id") long userId) {
-		return userService.deleteUser(userId);
+	@DeleteMapping()
+	public ResponseEntity<?> deleteUser() {
+		return userService.deleteUser(0);
 	}
 }

@@ -17,7 +17,7 @@ public interface UserService {
 
 	ResponseEntity<?> getAllUsers();
 
-	ResponseEntity<?> updateUser(long userId, UserUpdateReq reqDto);
+	ResponseEntity<?> updateUser(UserUpdateReq reqDto);
 
 	ResponseEntity<?> deleteUser(long userId);
 }
