@@ -37,8 +37,8 @@ public class CourseModel {
 	@ManyToMany
 	@JoinTable(
 		name = "enrolled_courses",
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "course_id")
+		joinColumns = @JoinColumn(name = "course_id"),
+		inverseJoinColumns = @JoinColumn(name = "user_id")
 	)
 	Set<UserModel> students;
 }

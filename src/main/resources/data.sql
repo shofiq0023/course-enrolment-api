@@ -18,3 +18,38 @@ VALUES (3, 'ROLE_INSTRUCTOR', 'An user who can public, edit, delete, update a co
 
 INSERT INTO role_definition (id, role_name, role_desc)
 VALUES (4, 'ROLE_USER', 'This is the default role every user get upon signing up.');
+
+-- Insert user data
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (1, 'super.admin', 'Super admin user', 'super@gmail.com', '01478520124', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-02-25', 'ROLE_USER, ROLE_SUPER_ADMIN', now());
+
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (2, 'admin', 'Admin user', 'admin@gmail.com', '01478520121', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-02-01', 'ROLE_USER, ROLE_ADMIN', now());
+
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (3, 'instructor', 'Instructor user', 'instructor@gmail.com', '01478520122', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-02-02', 'ROLE_USER, ROLE_INSTRUCTOR', now());
+
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (4, 'instructor2', 'Instructor user 2', 'instructor2@gmail.com', '01478520126', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-03-20', 'ROLE_USER, ROLE_INSTRUCTOR', now());
+
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (5, 'user', 'Normal user', 'user@gmail.com', '01478520123', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-02-28', 'ROLE_USER', now());
+
+INSERT INTO users ("id", "username", "name", "email", "mobile", "password", "address", "date_of_birth", "roles", "signup_date")
+VALUES (6, 'shofiqul', 'Shofiqul Islam', 'shofiqul@gmail.com', '01618638686', '$2a$10$5/3XMOb8gxtexZyjmZQOJeKTyGgJgbujO1uwP6O/7tqoJppYno7QS', 'Dhaka, Bangladesh', '1995-02-28', 'ROLE_USER', now());
+
+-- Insert course data
+INSERT INTO courses ("id", "title", "description", "topic", "created_time", "active", "instructor_id")
+VALUES (1, 'Java for beginners', 'This course is for the people who are new to Java', 'java, oop, basic java', now(), true, 3);
+
+INSERT INTO courses ("id", "title", "description", "topic", "created_time", "active", "instructor_id")
+VALUES (2, 'Spring boot basic', 'This course is for the people who are new to Spring boot', 'java, spring, spring-boot', now(), true, 3);
+
+INSERT INTO courses ("id", "title", "description", "topic", "created_time", "active", "instructor_id")
+VALUES (3, 'C# and .NET for beginners', 'This course is for the people who are new to C# and .NET framework', 'c#, .net, dotnet', now(), true, 3);
+
+INSERT INTO courses ("id", "title", "description", "topic", "created_time", "active", "instructor_id")
+VALUES (4, 'Fullstack Web development', 'Fullstack web development course', 'html, css, js, javascript, fullstack', now(), true, 4);
+
+INSERT INTO courses ("id", "title", "description", "topic", "created_time", "active", "instructor_id")
+VALUES (5, 'Modern JavaScript', 'Modern javascript course with ES6', 'js, javascript, es6', now(), true, 4);
