@@ -39,6 +39,7 @@ public class UserServicesImpl implements UserService {
 	private final AuthenticationManager authManager;
 	private final ResponseService resService;
 	private final JwtService jwtService;
+	private final CourseServiceImpl courseService;
 	
 	@Override
 	public ResponseEntity<?> userAuthenticate(UserAuthReq req) {
@@ -173,13 +174,9 @@ public class UserServicesImpl implements UserService {
 		if (userOpt.isEmpty()) {
 			return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
 		} else {
-			if (userId == 0) {
-				userRepo.deleteByUsername(username);
-			} else {
-				userRepo.deleteById(userId);
-			}
+			courseService.deleteUserFromEnrolledCourse(userOpt.get().getId(), 0);
+			userRepo.deleteById(userOpt.get().getId());
 		}
-		
 		
 		return resService.createResponse("User delete successful", HttpStatus.OK);
 	}

@@ -29,4 +29,6 @@ public interface CourseService {
 	ResponseEntity<?> searchCourses(String searchText);
 
 	ResponseEntity<?> studentEnrollment(StudentEnrollmentReqDto dto);
+
+	ResponseEntity<?> studentDerollment(StudentEnrollmentReqDto dto);
 }

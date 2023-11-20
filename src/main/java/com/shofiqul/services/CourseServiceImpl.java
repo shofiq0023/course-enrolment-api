@@ -20,9 +20,12 @@ import com.shofiqul.dto.CourseReqDto;
 import com.shofiqul.dto.StudentEnrollmentReqDto;
 import com.shofiqul.dto.UserDto;
 import com.shofiqul.entities.CourseModel;
+import com.shofiqul.entities.EnrolledCourses;
+import com.shofiqul.entities.EnrolledCourses.EnrolledCoursesId;
 import com.shofiqul.entities.UserModel;
 import com.shofiqul.interfaces.CourseRepo;
 import com.shofiqul.interfaces.CourseService;
+import com.shofiqul.interfaces.EnrolledCoursesRepo;
 import com.shofiqul.repo.UserRepo;
 import com.shofiqul.utils.Utility;
 
@@ -33,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class CourseServiceImpl implements CourseService {
 	private final CourseRepo courseRepo;
 	private final UserRepo userRepo;
+	private final EnrolledCoursesRepo enrollmentRepo;
 	private final ResponseService resService;
 
 	@Override
@@ -182,4 +186,22 @@ public class CourseServiceImpl implements CourseService {
 		return resService.createResponse("Enrollment successful", HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<?> studentDerollment(StudentEnrollmentReqDto dto) {
+		return resService.createResponse(deleteUserFromEnrolledCourse(dto.getUserId(), dto.getCourseId()), HttpStatus.OK);
+	}
+	
+	protected int deleteUserFromEnrolledCourse(long userId, long courseId) {
+		int count = 0;
+		
+		if (courseId == 0) {
+			count = enrollmentRepo.deleteByUserId(userId);
+		} else if (userId == 0) {
+			count = enrollmentRepo.deleteByCourseId(courseId);
+		} else {
+			count = enrollmentRepo.deleteByUserIdAndCourseId(userId, courseId);
+		}
+		
+		return count;
+	}
 }
