@@ -16,5 +16,6 @@ public class CourseDto {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Timestamp createdTime;
 	private boolean active;
+	private UserDto instructor;
 	private List<UserDto> students;
 }

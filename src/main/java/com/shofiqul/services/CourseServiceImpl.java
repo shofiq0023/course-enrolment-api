@@ -66,7 +66,7 @@ public class CourseServiceImpl implements CourseService {
 		
 		if (course.isEmpty()) return resService.createResponse("No course found", HttpStatus.NOT_FOUND);
 		
-		CourseDto courseRes = Utility.copyProperties(course.get(), CourseDto.class);
+		CourseDto courseRes = convertCrouseModelToDtoWithInstructor(course.get());
 		
 		return resService.createResponse(courseRes, "Course found", HttpStatus.OK);
 	}
@@ -105,7 +105,7 @@ public class CourseServiceImpl implements CourseService {
 		
 		courseRepo.findAllByActive(true).forEach(courses::add);
 		
-		return resService.createResponse(courses, "Courses found", HttpStatus.FOUND);
+		return resService.createResponse(convertCrouseModelsToDtoWithInstructor(courses), "Courses found", HttpStatus.FOUND);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class CourseServiceImpl implements CourseService {
 		
 		if (courses.isEmpty()) return resService.createResponse("No courses found with the given topic", HttpStatus.NOT_FOUND);
 		
-		return resService.createResponse(courses, HttpStatus.OK);
+		return resService.createResponse(convertCrouseModelsToDtoWithInstructor(courses), HttpStatus.OK);
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseModel> courses = new ArrayList<CourseModel>();
 		courses = courseRepo.searchCourse(searchText);
 		
-		return resService.createResponse(courses, "Courses found", HttpStatus.OK);
+		return resService.createResponse(convertCrouseModelsToDtoWithInstructor(courses), "Courses found", HttpStatus.OK);
 	}
 
 	@Override
@@ -227,5 +227,23 @@ public class CourseServiceImpl implements CourseService {
 				.collect(Collectors.toList()));
 		return dto;
 	}
-
+	
+	protected CourseDto convertCrouseModelToDtoWithInstructor(CourseModel course) {
+		CourseDto dto = Utility.copyProperties(course, CourseDto.class);
+		dto.setInstructor(Utility.copyProperties(course.getInstructor(), UserDto.class));
+		
+		return dto;
+	}
+	
+	protected List<CourseDto> convertCrouseModelsToDtoWithInstructor(List<CourseModel> courses) {
+		List<CourseDto> dtos = new ArrayList<CourseDto>();
+		for (CourseModel course : courses) {
+			CourseDto c = Utility.copyProperties(course, CourseDto.class);
+			c.setInstructor(Utility.copyProperties(course.getInstructor(), UserDto.class));
+			
+			dtos.add(c);
+		}
+		
+		return dtos;
+	}
 }
