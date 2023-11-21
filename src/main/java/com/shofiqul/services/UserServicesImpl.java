@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shofiqul.config.JwtService;
+import com.shofiqul.dto.CourseDto;
 import com.shofiqul.dto.UserAuthReq;
 import com.shofiqul.dto.UserDto;
 import com.shofiqul.dto.UserRegisterReq;
 import com.shofiqul.dto.UserUpdateReq;
+import com.shofiqul.entities.CourseModel;
 import com.shofiqul.entities.UserModel;
+import com.shofiqul.interfaces.CourseRepo;
 import com.shofiqul.interfaces.UserService;
 import com.shofiqul.repo.UserRepo;
 import com.shofiqul.utils.Utility;
@@ -35,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServicesImpl implements UserService {
 	private final UserRepo userRepo;
+	private final CourseRepo courseRepo;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authManager;
 	private final ResponseService resService;
@@ -94,24 +99,25 @@ public class UserServicesImpl implements UserService {
 	@Override
 	public ResponseEntity<?> getUserDetails(long userId) {
 		Optional<UserModel> userOpt = Optional.empty();
-		
+
 		if (userId == 0) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			userOpt = userRepo.findByUsername(username);
 		} else {
 			userOpt = userRepo.findById(userId);
+			if (userOpt.isEmpty()) return resService.createResponse("User not found", HttpStatus.NOT_FOUND);
 		}
-		
-		if (userOpt.isPresent()) {
-			UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
-			user.setRoles(
-					Arrays.asList(userOpt.get().getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE))
-				);
-			
-			return resService.createResponse(user, "User found", HttpStatus.FOUND);
-		} else {
-			return resService.createResponse("No user found", HttpStatus.NOT_FOUND);
-		}
+
+		UserDto user = Utility.copyProperties(userOpt.get(), UserDto.class);
+		user.setRoles(Arrays.asList(userOpt.get().getRoles().split(COMMA_WITH_OR_WITHOUT_SPACE)));
+		List<CourseModel> enrolledCourses = courseRepo.findEnrolledCourses(user.getId());
+
+		List<CourseDto> courses = enrolledCourses.stream()
+					.map(c -> Utility.copyProperties(c, CourseDto.class))
+					.collect(Collectors.toList());
+		user.setEnrolledCourses(courses);
+
+		return resService.createResponse(user, HttpStatus.OK);
 	}
 
 	@Override
@@ -180,5 +186,4 @@ public class UserServicesImpl implements UserService {
 		
 		return resService.createResponse("User delete successful", HttpStatus.OK);
 	}
-
 }

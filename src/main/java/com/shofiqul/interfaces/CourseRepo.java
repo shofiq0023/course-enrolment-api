@@ -24,4 +24,9 @@ public interface CourseRepo extends JpaRepository<CourseModel, Long> {
 
 	Optional<CourseModel> findByIdAndActive(long courseId, boolean b);
 
+	@Query("SELECT c FROM CourseModel c"
+			+ "	RIGHT JOIN EnrolledCourses ec ON c.id=ec.enrolledCoursesId.courseId"
+			+ " WHERE ec.enrolledCoursesId.userId=:id")
+	List<CourseModel> findEnrolledCourses(long id);
+
 }

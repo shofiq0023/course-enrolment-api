@@ -33,4 +33,5 @@ public interface CourseService {
 	ResponseEntity<?> studentDerollment(StudentEnrollmentReqDto dto);
 
 	ResponseEntity<?> getCourseWithStudentInfo(long courseId);
+
 }

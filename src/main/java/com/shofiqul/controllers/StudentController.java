@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shofiqul.dto.StudentEnrollmentReqDto;
 import com.shofiqul.interfaces.CourseService;
+import com.shofiqul.interfaces.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StudentController {
 	private final CourseService courseService;
+	private final UserService userService;
 	
 	@GetMapping("/courses")
 	public ResponseEntity<?> getAllCoursesByStatus() {
@@ -49,5 +51,10 @@ public class StudentController {
 	@GetMapping("/course/{id}")
 	public ResponseEntity<?> getCourseWithStudentInfo(@PathVariable("id") long courseId) {
 		return courseService.getCourseWithStudentInfo(courseId);
+	}
+	
+	@GetMapping()
+	public ResponseEntity<?> getStudentInformation() {
+		return userService.getUserDetails(0);
 	}
 }

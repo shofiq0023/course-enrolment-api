@@ -21,4 +21,5 @@ public class UserDto {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Dhaka")
 	private Timestamp signupDate;
 	private List<String> roles;
+	private List<CourseDto> enrolledCourses;
 }
