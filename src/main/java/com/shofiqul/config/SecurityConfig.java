@@ -1,6 +1,11 @@
 package com.shofiqul.config;
 
-import static com.shofiqul.utils.Consts.*;
+import static com.shofiqul.utils.Consts.OPEN_COURSE_APIS;
+import static com.shofiqul.utils.Consts.ROLE_ADMIN;
+import static com.shofiqul.utils.Consts.ROLE_INSTRUCTOR;
+import static com.shofiqul.utils.Consts.ROLE_SUPER_ADMIN;
+import static com.shofiqul.utils.Consts.ROLE_USER;
+import static com.shofiqul.utils.Consts.WHITELIST_APIS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,17 +1,15 @@
 package com.shofiqul.services;
 
-import static com.shofiqul.utils.Consts.*;
+import static com.shofiqul.utils.Consts.ROLE_INSTRUCTOR;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +18,10 @@ import com.shofiqul.dto.CourseReqDto;
 import com.shofiqul.dto.StudentEnrollmentReqDto;
 import com.shofiqul.dto.UserDto;
 import com.shofiqul.entities.CourseModel;
-import com.shofiqul.entities.EnrolledCourses;
-import com.shofiqul.entities.EnrolledCourses.EnrolledCoursesId;
 import com.shofiqul.entities.UserModel;
-import com.shofiqul.interfaces.CourseRepo;
 import com.shofiqul.interfaces.CourseService;
-import com.shofiqul.interfaces.EnrolledCoursesRepo;
+import com.shofiqul.repo.CourseRepo;
+import com.shofiqul.repo.EnrolledCoursesRepo;
 import com.shofiqul.repo.UserRepo;
 import com.shofiqul.utils.Utility;
 

@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.shofiqul.dto.UserAuthReq;
 import com.shofiqul.dto.UserRegisterReq;
-import com.shofiqul.dto.UserRoleUpdateDto;
 import com.shofiqul.dto.UserUpdateReq;
 
 public interface UserService {

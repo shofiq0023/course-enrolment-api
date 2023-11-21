@@ -1,4 +1,4 @@
-package com.shofiqul.interfaces;
+package com.shofiqul.repo;
 
 import java.util.List;
 import java.util.Optional;

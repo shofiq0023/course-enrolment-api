@@ -1,6 +1,7 @@
 package com.shofiqul.services;
 
-import static com.shofiqul.utils.Consts.*;
+import static com.shofiqul.utils.Consts.COMMA_WITH_OR_WITHOUT_SPACE;
+import static com.shofiqul.utils.Consts.ROLE_USER;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +29,8 @@ import com.shofiqul.dto.UserRegisterReq;
 import com.shofiqul.dto.UserUpdateReq;
 import com.shofiqul.entities.CourseModel;
 import com.shofiqul.entities.UserModel;
-import com.shofiqul.interfaces.CourseRepo;
 import com.shofiqul.interfaces.UserService;
+import com.shofiqul.repo.CourseRepo;
 import com.shofiqul.repo.UserRepo;
 import com.shofiqul.utils.Utility;
 

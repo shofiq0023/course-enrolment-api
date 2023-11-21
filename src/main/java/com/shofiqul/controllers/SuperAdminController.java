@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/v1/super")
 @RequiredArgsConstructor
 public class SuperAdminController {
-	private final UserService userService;
 	private final RoleService roleService;
 	
 	@PostMapping("/update/roles/{id}")

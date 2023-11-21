@@ -2,7 +2,6 @@ package com.shofiqul.entities;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
