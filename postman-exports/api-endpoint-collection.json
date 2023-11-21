@@ -1,0 +1,752 @@
+{
+	"info": {
+		"_postman_id": "b551cf41-abe6-4260-9064-5b3fd57c3f92",
+		"name": "# Student Enrollment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18200254"
+	},
+	"item": [
+		{
+			"name": "Users management",
+			"item": [
+				{
+					"name": "Register a new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"username\": \"john\",\r\n    \"email\": \"john@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"signupDate\": \"2023-11-08 12:38:46\",\r\n    \"dateOfBirth\": \"1999-02-28\",\r\n    \"mobile\": \"01618638686\",\r\n    \"address\": \"Dhaka, Bangladesh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register as an instructor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Maaika Stephen\",\r\n    \"username\": \"maika\",\r\n    \"email\": \"maika@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"signupDate\": \"2023-11-08 12:38:46\",\r\n    \"dateOfBirth\": \"1999-02-28\",\r\n    \"mobile\": \"01618638686\",\r\n    \"address\": \"Dhaka, Bangladesh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/user/register/instructor",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user",
+								"register",
+								"instructor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"shofiqul\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/user/authenticate",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user details of current user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user's information",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Normal user\",\r\n    \"email\": \"user@gmail.com\",\r\n    \"mobile\": \"01478520123\",\r\n    \"address\": \"Cumilla, Bangladesh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete current account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course Management",
+			"item": [
+				{
+					"name": "Create a new course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-instructor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Beginner to Master NodeJS\",\r\n    \"description\": \"This course will teach the fundamentals and other tools for mastering NodeJS\",\r\n    \"topic\": \"javascript, nodejs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/course/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a course by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/course/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-instructor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Java for beginners [updated 2023]\",\r\n    \"description\": \"This course will cover the fundamentals for java.\",\r\n    \"topic\": \"java, spring boot\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/course/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get courses of an instructor",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/course/instructor/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"instructor",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a list of instructors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/course/instructors",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"instructors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes a course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-instructor}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/course/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"course",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student management",
+			"item": [
+				{
+					"name": "Get all the active course list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/student/courses",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search courses using topic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/student/courses/topic?topic=javasc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"courses",
+								"topic"
+							],
+							"query": [
+								{
+									"key": "topic",
+									"value": "javasc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search text using search text",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/student/courses/search?t=beginner",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"courses",
+								"search"
+							],
+							"query": [
+								{
+									"key": "t",
+									"value": "beginner"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll in a course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"courseId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/student/enroll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deroll from a course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"courseId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/student/deroll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"deroll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get course info with student info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/student/course/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student",
+								"course",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user info with course info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-user}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/student",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"student"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin APIs",
+			"item": [
+				{
+					"name": "Get a list of users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/admin/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user detail by user id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/admin/user/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"admin",
+								"user",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user's account by user id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/admin/user/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"admin",
+								"user",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Super-admin APIs",
+			"item": [
+				{
+					"name": "Update the role of a user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-super-admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roles\": [\r\n        \"ROLE_INSTRUCTOR\",\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/super/update/roles/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"super",
+								"update",
+								"roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove user's role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{jwt-super-admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roles\": [\r\n        \"ROLE_INSTRUCTOR\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/super/remove/role/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"super",
+								"remove",
+								"role",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
