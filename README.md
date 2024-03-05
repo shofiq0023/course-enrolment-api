@@ -18,12 +18,12 @@ An API project for managing courses.
 
 ### API List:
 - **Users Api**
-![users-controller](documentation\user-controller.png)
+![users-controller](documentation/user-controller.png)
 - **Students Api**
-![student-controller](documentation\student-controller.png)
+![student-controller](documentation/student-controller.png)
 - **Admin Api**
-![admin-controller](documentation\admin-controller.png)
+![admin-controller](documentation/admin-controller.png)
 - **Super-admin Api**
-![super-admin-controller](documentation\super-admin-controller.png)
+![super-admin-controller](documentation/super-admin-controller.png)
 - **Course Api**
-![course-controller](documentation\course-controller.png)
+![course-controller](documentation/course-controller.png)
