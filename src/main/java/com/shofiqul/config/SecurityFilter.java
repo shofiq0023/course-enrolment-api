@@ -44,14 +44,16 @@ public class SecurityFilter extends OncePerRequestFilter {
 		String username = null;
 		
 		try {
-			List<String> ignoreApi = Arrays.asList(whitelistApi);
-			if (ignoreApi.contains(request.getServletPath())) {
-				filterChain.doFilter(request, response);
-				return;
-			}
+//			List<String> ignoreApi = Arrays.asList(whitelistApi);
+//			if (ignoreApi.contains(request.getServletPath())) {
+//				filterChain.doFilter(request, response);
+//				return;
+//			}
 			
 			if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-				throw new TokenMissingException("Authorization header missing");
+				// throw new TokenMissingException("Authorization header missing");
+				filterChain.doFilter(request, response);
+				return;
 			}
 
 			token = authHeader.substring(7);
